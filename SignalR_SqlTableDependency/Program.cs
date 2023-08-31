@@ -1,7 +1,12 @@
+using SignalR_SqlTableDependency.Hubs;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Add services SignalR into the program
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -19,9 +24,11 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+// Registering Hub into app
+app.MapHub<DashboardHub>("/dashboardHub");
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Dashboard}/{action=Index}/{id?}");
 
 app.Run();
