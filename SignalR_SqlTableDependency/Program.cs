@@ -1,4 +1,6 @@
 using SignalR_SqlTableDependency.Hubs;
+using SignalR_SqlTableDependency.MiddlewareExtensions;
+using SignalR_SqlTableDependency.SubscribeTableDependencies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,10 @@ builder.Services.AddControllersWithViews();
 
 // Add services SignalR into the program
 builder.Services.AddSignalR();
+
+// DI - Dependency Injection
+builder.Services.AddSingleton<DashboardHub>();
+builder.Services.AddSingleton<SubscribeProductTableDependency>();
 
 var app = builder.Build();
 
@@ -30,5 +36,14 @@ app.MapHub<DashboardHub>("/dashboardHub");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Dashboard}/{action=Index}/{id?}");
+
+/*
+ * 
+ * We must call SubscribeTableDependency() here
+ * We create one middleware and call SubscribeTableDependency() method in the middleware
+ * 
+ */
+
+app.UseProductTableDependency();
 
 app.Run();
