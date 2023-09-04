@@ -13,6 +13,7 @@ builder.Services.AddSignalR();
 // DI - Dependency Injection
 builder.Services.AddSingleton<DashboardHub>();
 builder.Services.AddSingleton<SubscribeProductTableDependency>();
+builder.Services.AddSingleton<SubscribeSaleTableDependency>();
 
 var app = builder.Build();
 

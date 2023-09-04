@@ -10,5 +10,12 @@ namespace SignalR_SqlTableDependency.MiddlewareExtensions
             var service = serviceProvider.GetService<SubscribeProductTableDependency>();
             service.SubscribeTableDependency();
         }
+
+        public static void UseSaleTableDepnendency(this IApplicationBuilder applicationBuilder)
+        {
+            var serviceProvider = applicationBuilder.ApplicationServices;
+            var service = serviceProvider.GetService<SubscribeSaleTableDependency>();
+            service.SubscribeTableDependency();
+        }
     }
 }
