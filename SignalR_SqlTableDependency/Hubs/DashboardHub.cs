@@ -7,12 +7,14 @@ namespace SignalR_SqlTableDependency.Hubs
     {
         ProductRepository productRepository;
         SaleRepository saleRepository;
+        CustomerRepository customerRepository;
 
         public DashboardHub(IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             productRepository = new ProductRepository(connectionString);
             saleRepository = new SaleRepository(connectionString);
+            customerRepository = new CustomerRepository(connectionString);
         }
 
         public async Task SendProducts()
@@ -25,6 +27,12 @@ namespace SignalR_SqlTableDependency.Hubs
         {
             var sales = saleRepository.GetSales();
             await Clients.All.SendAsync("ReceivedSales", sales);
+        }
+
+        public async Task SendCustomers()
+        {
+            var customers = customerRepository.GetCustomers();
+            await Clients.All.SendAsync("ReceivedCustomers", customers);
         }
     }
 }

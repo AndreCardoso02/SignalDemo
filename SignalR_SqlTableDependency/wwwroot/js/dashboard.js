@@ -7,6 +7,8 @@ $(function () {
         alert('Connected to dashboard');
 
         InvokeProducts();
+        InvokeSales();
+        InvokeCustomers();
     }).catch(function (err) {
         return console.error(err.toString());
     });
@@ -61,5 +63,32 @@ function BindSalesToGrid(sales) {
         tr.append(`<td>${sale.amount}</td>`);
         tr.append(`<td>${sale.purchasedOn}</td>`);
         $('#tblSale').append(tr);
+    });
+}
+
+// Send and Receive Customers
+function InvokeCustomers() {
+    connection.invoke("SendCustomers").catch(function (err) {
+        return console.error(err.toString());
+    });
+}
+
+
+connection.on("ReceivedCustomers", function (customers) {
+    BindCustomersToGrid(customers);
+});
+
+function BindCustomersToGrid(customers) {
+    $('#tblCustomer tbody').empty();
+
+    var tr;
+
+    $.each(customers, function (index, customer) {
+        tr = $('<tr/>');
+        tr.append(`<td>${(index + 1)}</td>`);
+        tr.append(`<td>${customer.name}</td>`);
+        tr.append(`<td>${customer.gender}</td>`);
+        tr.append(`<td>${customer.mobile}</td>`);
+        $('#tblCustomer').append(tr);
     });
 }
