@@ -5,7 +5,7 @@ using TableDependency.SqlClient.Base.EventArgs;
 
 namespace SignalR_SqlTableDependency.SubscribeTableDependencies
 {
-    public class SubscribeSaleTableDependency
+    public class SubscribeSaleTableDependency : ISubscribeTableDependency
     {
         SqlTableDependency<Sale> tableDependency;
         DashboardHub dashboardHub;
@@ -15,9 +15,8 @@ namespace SignalR_SqlTableDependency.SubscribeTableDependencies
             this.dashboardHub = dashboardHub;
         }
 
-        public void SubscribeTableDependency()
+        public void SubscribeTableDependency(string connectionString)
         {
-            string connectionString = "Data Source=172.31.6.9;Initial Catalog=SignalRDB;User Id=sa;Password=AT@123;";
             tableDependency = new SqlTableDependency<Sale>(connectionString);
             tableDependency.OnChanged += TableDependency_OnChange;
             tableDependency.OnError += TableDependency_OnError;

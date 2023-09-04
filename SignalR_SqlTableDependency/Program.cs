@@ -17,6 +17,9 @@ builder.Services.AddSingleton<SubscribeSaleTableDependency>();
 
 var app = builder.Build();
 
+// connection string var
+var connectionString = app.Configuration.GetConnectionString("DefaultConnection");
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -45,6 +48,7 @@ app.MapControllerRoute(
  * 
  */
 
-app.UseProductTableDependency();
+app.UseSqlTableDependency<SubscribeProductTableDependency>(connectionString);
+app.UseSqlTableDependency<SubscribeSaleTableDependency>(connectionString);
 
 app.Run();

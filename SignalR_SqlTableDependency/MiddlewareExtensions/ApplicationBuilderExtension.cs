@@ -4,18 +4,13 @@ namespace SignalR_SqlTableDependency.MiddlewareExtensions
 {
     public static class ApplicationBuilderExtension
     {
-        public static void UseProductTableDependency(this IApplicationBuilder applicationBuilder)
-        {
-            var serviceProvider = applicationBuilder.ApplicationServices;
-            var service = serviceProvider.GetService<SubscribeProductTableDependency>();
-            service.SubscribeTableDependency();
-        }
 
-        public static void UseSaleTableDepnendency(this IApplicationBuilder applicationBuilder)
+        public static void UseSqlTableDependency<T>(this IApplicationBuilder applicationBuilder, string connectionString)
+            where T : ISubscribeTableDependency
         {
             var serviceProvider = applicationBuilder.ApplicationServices;
-            var service = serviceProvider.GetService<SubscribeSaleTableDependency>();
-            service.SubscribeTableDependency();
+            var service = serviceProvider.GetService<T>();
+            service.SubscribeTableDependency(connectionString);
         }
     }
 }
