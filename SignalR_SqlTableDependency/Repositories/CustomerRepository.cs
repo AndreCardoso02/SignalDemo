@@ -66,5 +66,58 @@ namespace SignalR_SqlTableDependency.Repositories
                 }
             }
         }
+
+        // Graphics
+        public List<CustomerForGraph> GetCustomersForGraph()
+        {
+            List<CustomerForGraph> customersForGraph = new List<CustomerForGraph>();
+            CustomerForGraph customerForGraph;
+
+            var data = GetCustomersForGraphFromDb();
+
+            foreach (DataRow row in data.Rows)
+            {
+                customerForGraph = new CustomerForGraph
+                {
+                    Gender = row["Gender"].ToString(),
+                    Customers = Convert.ToInt32(row["Customers"])
+                };
+
+                customersForGraph.Add(customerForGraph);
+            }
+
+            return customersForGraph;
+        }
+
+        private DataTable GetCustomersForGraphFromDb()
+        {
+            var query = "SELECT Gender, COUNT(Id) Customers FROM Customer GROUP BY Gender";
+            DataTable customers = new DataTable();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            customers.Load(reader);
+                        }
+                    }
+
+                    return customers;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
     }
 }

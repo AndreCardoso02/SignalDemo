@@ -5,6 +5,7 @@
 }
 
 <div>
+    <!-- Tables -->
     <div class="row">
         <!-- Product Table -->
         <div class="col-md-4">
@@ -76,12 +77,56 @@
         </div>
 
     </div>
+
+    <!-- Graphics -->
+    <div class="row">
+        <!-- Products Graphic-->
+        <div class="col-md-4">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h4>Products</h4>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <canvas id="canvasProducts" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sale Graphic-->
+        <div class="col-md-4">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h4>Sales</h4>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <canvas id="canvasSales" width="500" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer Graphic -->
+        <div class="col-md-4">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h4>Customer</h4>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <canvas id="canvasCustomers" width="300" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 
 @section Scripts{
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.js" integrity="sha512-6LKCH7i2+zMNczKuCT9ciXgFCKFp3MevWTZUXDlk7azIYZ2wF5LRsrwZqO7Flt00enUI+HwzzT5uhOvy6MNPiA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="~/js/dashboard.js"></script>
 }
 

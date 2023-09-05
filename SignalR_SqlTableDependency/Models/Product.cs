@@ -7,4 +7,10 @@
         public string Category { get; set; }
         public decimal Price { get; set; }
     }
+
+    public class ProductForGraph
+    {
+        public string Category { get; set; }
+        public int Products { get; set; }
+    }
 }
