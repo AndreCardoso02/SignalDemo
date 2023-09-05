@@ -8,6 +8,12 @@ html {
   }
 }
 
+@media(min-width: 1920px) {
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+        max-width: 1700px !important;
+    }
+}
+
 html {
   position: relative;
   min-height: 100%;
