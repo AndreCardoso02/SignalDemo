@@ -1,7 +1,16 @@
+using UpdateUIWithSignalR.BL;
+using UpdateUIWithSignalR.Hubs;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+// adding signal Hub into the services
+builder.Services.AddSignalR();
+
+// Injection of dependency
+builder.Services.AddSingleton<AdminHub>();
+builder.Services.AddSingleton<AdminJobs>();
 
 var app = builder.Build();
 
@@ -19,9 +28,11 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+// Mapping signal r hub class
+app.MapHub<AdminHub>("/adminHub");
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Admin}/{action=Index}/{id?}");
 
 app.Run();
