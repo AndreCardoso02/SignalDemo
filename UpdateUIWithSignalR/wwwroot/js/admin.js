@@ -11,6 +11,58 @@ $(function () {
 });
 
 connection.on("ReceivedMessage", function (type, message, status) {
-    $('#trRetrieve td:nth-child(2)').text(message);
-    $('#trRetrieve td:nth-child(3)').text(status);
+    var rowId = GetRowId(type);
+    var statusContent = GetStatusContent(status);
+
+    $('#' + rowId + ' td:nth-child(2)').text(message);
+    $('#' + rowId + ' td:nth-child(3)').html(statusContent);
+
+    if (status == 'completed') {
+        $('#' + rowId).css('color', 'green');
+    }
+    else if (status == 'error')
+    {
+        $('#' + rowId).css('color', 'red');
+    }
 });
+
+function GetRowId(type) {
+    var rowId = '';
+
+    switch (type) {
+        case 'Retrieve': {
+            rowId = 'trRetrieve';
+        }
+        case 'Calculate': {
+            rowId = 'trCalculate';
+        }
+        case 'Update': {
+            rowId = 'trUpdate';
+        }
+        case 'Logs': {
+            rowId = 'trLogs';
+        }
+        case 'Emails': {
+            rowId = 'trEmails';
+        }
+            break;
+    }
+
+    return rowId;
+}
+
+function GetStatusContent(status)
+{
+    var content = '';
+    if (status == 'started') {
+        content = '<img src="/images/processing.gif" width="24px" height="24px" /> working on...';
+    }
+    else if (status == 'completed') {
+        content = '<img src="/images/completed.png" width="24px" height="24px" /> completed';
+    }
+    else if (status == 'error') {
+        content = '<img src="/images/error.png" width="24px" height="24px" /> failed';
+    }
+
+    return content;
+}
