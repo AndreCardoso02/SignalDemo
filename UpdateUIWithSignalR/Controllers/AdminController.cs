@@ -17,6 +17,7 @@ namespace UpdateUIWithSignalR.Controllers
             return View();
         }
 
+        [HttpPost]
         public async Task<IActionResult> ProcessLoans()
         {
             await adminJobs.ProcessLoans();

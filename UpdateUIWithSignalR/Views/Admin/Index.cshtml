@@ -66,5 +66,17 @@
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
     <script src="~/js/admin.js"></script>
+
+    <script>
+        $(function() {
+            $('#btnProcessLoans').click(function(e) {
+                var url = 'Admin/ProcessLoans';
+                $.post(url, function(response) {
+                    console.log(response);
+                });
+            });
+        });
+    </script>
+
 }
 

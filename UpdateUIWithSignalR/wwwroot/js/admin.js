@@ -10,6 +10,7 @@ $(function () {
     });
 });
 
-connection.on("ReceivedMessage", function (message, status) {
-
+connection.on("ReceivedMessage", function (type, message, status) {
+    $('#trRetrieve td:nth-child(2)').text(message);
+    $('#trRetrieve td:nth-child(3)').text(status);
 });
