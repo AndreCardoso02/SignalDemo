@@ -33,15 +33,19 @@ function GetRowId(type) {
         case 'Retrieve': {
             rowId = 'trRetrieve';
         }
+            break;
         case 'Calculate': {
             rowId = 'trCalculate';
         }
+            break;
         case 'Update': {
             rowId = 'trUpdate';
         }
+            break;
         case 'Logs': {
             rowId = 'trLogs';
         }
+            break;
         case 'Emails': {
             rowId = 'trEmails';
         }
