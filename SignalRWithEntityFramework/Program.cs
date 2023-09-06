@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using SignalRWithEntityFramework.Hubs;
+using SignalRWithEntityFramework.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 // Add Signal R
 builder.Services.AddSignalR();
+
+// Adding Db Context
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<SignalRnotificationDbContext>(options =>
+    options.UseSqlServer(connectionString),
+    ServiceLifetime.Singleton
+);
 
 var app = builder.Build();
 
