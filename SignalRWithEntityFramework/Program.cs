@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using SignalRWithEntityFramework.Hubs;
+using SignalRWithEntityFramework.MiddlewareExtensions;
 using SignalRWithEntityFramework.Models;
 using SignalRWithEntityFramework.Repository;
+using SignalRWithEntityFramework.SubscribeTableDependencies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,8 @@ builder.Services.AddDbContext<SignalRnotificationDbContext>(options =>
 // Dependency Injection
 builder.Services.AddSingleton<UserRepository>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddSingleton<NotificationHub>();
+builder.Services.AddSingleton<SubscribeNotificationTableDependency>();
 
 // Configuring Session
 builder.Services.AddDistributedMemoryCache();
@@ -51,5 +55,7 @@ app.MapHub<NotificationHub>("/notificationHub");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Account}/{action=SignIn}/{id?}");
+
+app.UseSqlTableDependency<SubscribeNotificationTableDependency>(connectionString);
 
 app.Run();

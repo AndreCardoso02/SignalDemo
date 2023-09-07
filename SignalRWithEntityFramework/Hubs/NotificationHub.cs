@@ -12,7 +12,7 @@ namespace SignalRWithEntityFramework.Hubs
             this.dbContext = dbContext;
         }
 
-
+        #region Connect, Save User and Disconnect Methods
         // Verifing when a browser has connect into the web site
         public override Task OnConnectedAsync()
         {
@@ -30,22 +30,9 @@ namespace SignalRWithEntityFramework.Hubs
                 Username = username
             };
 
-            // Searching if is already exists
-            var hubConnectionFound = dbContext
-                                       .HubConnections
-                                       .FirstOrDefault(hub => hub.Username == username);
-
-            if (hubConnectionFound != null) // update if exists
-            {
-                hubConnection.ConnectionId = connectionId;
-                dbContext.HubConnections.Update(hubConnection);
-                await dbContext.SaveChangesAsync();
-            } 
-            else // Insert if not exists
-            {
-                dbContext.HubConnections.Add(hubConnection);
-                await dbContext.SaveChangesAsync();
-            }
+            dbContext.HubConnections.Add(hubConnection);
+            await dbContext.SaveChangesAsync();
+            
         }
 
         public override Task OnDisconnectedAsync(Exception? exception)
@@ -63,6 +50,24 @@ namespace SignalRWithEntityFramework.Hubs
 
             return base.OnDisconnectedAsync(exception);
         }
+        #endregion
+
+        // Sendind Message Methods
+        #region Sending Message Methods
+        public async Task SendNotificationToAll(string message)
+        {
+            await Clients.All.SendAsync("ReceivedNotification", message);
+        }
+
+        public async Task SendNotificationToClient(string message, string username)
+        {
+            var listOfHubConnections = dbContext.HubConnections.Where(hub => hub.Username == username).ToList();
+            foreach (var hubConnection in listOfHubConnections)
+            {
+               await  Clients.Client(hubConnection.ConnectionId).SendAsync("ReceivedPersonalNotification", message, username);
+            }
+        }
+        #endregion
 
 
 

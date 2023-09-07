@@ -21,3 +21,12 @@ function OnConnected() {
         console.error(err.toString());
     });
 }
+
+// Received Notifications methods
+connection.on("ReceivedNotification", function (message) {
+    alert("You receive a generic message: " + message)
+});
+
+connection.on("ReceivedPersonalNotification", function (message, username) {
+    alert("Someone send you a message: " + message);
+});
