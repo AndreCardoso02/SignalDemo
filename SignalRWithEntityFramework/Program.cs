@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SignalRWithEntityFramework.Hubs;
 using SignalRWithEntityFramework.Models;
+using SignalRWithEntityFramework.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,14 @@ builder.Services.AddDbContext<SignalRnotificationDbContext>(options =>
     options.UseSqlServer(connectionString),
     ServiceLifetime.Singleton
 );
+
+// Dependency Injection
+builder.Services.AddSingleton<UserRepository>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+// Configuring Session
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -32,11 +41,15 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+// Session
+app.UseSession();
+
 // Map Signal R with Route
 app.MapHub<NotificationHub>("/notificationHub");
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=SignIn}/{id?}");
 
 app.Run();
