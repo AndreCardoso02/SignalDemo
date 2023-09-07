@@ -16,10 +16,11 @@ namespace SignalRWithEntityFramework.SubscribeTableDependencies
 
         public void SubscribeTableDependency(string connectionString)
         {
+            // Implement try catch here
             tableDependency = new SqlTableDependency<Notification>(connectionString);
             tableDependency.OnChanged += TableDependency_OnChanged;
             tableDependency.OnError += TableDependency_OnError;
-
+            tableDependency.Start();
         }
 
         private void TableDependency_OnError(object sender, TableDependency.SqlClient.Base.EventArgs.ErrorEventArgs e)

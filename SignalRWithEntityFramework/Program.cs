@@ -14,6 +14,7 @@ builder.Services.AddSignalR();
 
 // Adding Db Context
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var sqlDepConnectionString = builder.Configuration.GetConnectionString("SqlTableConnection");
 builder.Services.AddDbContext<SignalRnotificationDbContext>(options =>
     options.UseSqlServer(connectionString),
     ServiceLifetime.Singleton
@@ -56,6 +57,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Account}/{action=SignIn}/{id?}");
 
-app.UseSqlTableDependency<SubscribeNotificationTableDependency>(connectionString);
+app.UseSqlTableDependency<SubscribeNotificationTableDependency>(sqlDepConnectionString);
 
 app.Run();

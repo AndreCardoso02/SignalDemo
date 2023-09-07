@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-var connection = new signalR().HubConnectionBuilder().withUrl("/notificationHub").build();
+var connection = new signalR.HubConnectionBuilder().withUrl("/notificationHub").build();
 
 // Init hub
 $(function () {

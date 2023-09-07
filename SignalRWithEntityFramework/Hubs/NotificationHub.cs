@@ -23,16 +23,18 @@ namespace SignalRWithEntityFramework.Hubs
         // Save user name
         public async Task SaveUserConnection(string username)
         {
-            var connectionId = Context.ConnectionId;
-            HubConnection hubConnection = new HubConnection
+            if (!string.IsNullOrEmpty(username))
             {
-                ConnectionId = connectionId,
-                Username = username
-            };
+                var connectionId = Context.ConnectionId;
+                HubConnection hubConnection = new HubConnection
+                {
+                    ConnectionId = connectionId,
+                    Username = username
+                };
 
-            dbContext.HubConnections.Add(hubConnection);
-            await dbContext.SaveChangesAsync();
-            
+                dbContext.HubConnections.Add(hubConnection);
+                await dbContext.SaveChangesAsync();
+            }            
         }
 
         public override Task OnDisconnectedAsync(Exception? exception)

@@ -32,5 +32,11 @@ namespace SignalRWithEntityFramework.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult SignOut()
+        {
+            HttpContext.Session.Remove("Username");
+            return RedirectToAction(nameof(SignIn));
+        }
     }
 }
