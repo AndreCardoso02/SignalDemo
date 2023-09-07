@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -32,6 +34,7 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            <input type="hidden" id="hfUsername" value="@HttpContextAccessor.HttpContext?.Session.GetString("Username")" />
             @RenderBody()
         </main>
     </div>

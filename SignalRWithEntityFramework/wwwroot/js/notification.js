@@ -10,3 +10,14 @@ $(function () {
         console.err(error.toString());
     })
 });
+
+connection.on("OnConnected", function () {
+    OnConnected();
+});
+
+function OnConnected() {
+    var username = $('#hfUsername').val();
+    connection.invoke("SaveUserConnection", username).catch(function (err) {
+        console.error(err.toString());
+    });
+}

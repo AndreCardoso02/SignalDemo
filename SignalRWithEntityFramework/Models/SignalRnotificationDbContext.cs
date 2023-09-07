@@ -31,6 +31,10 @@ public partial class SignalRnotificationDbContext : DbContext
 
             entity.ToTable("HubConnection");
 
+            entity.Property(e => e.ConnectionId)
+                .HasMaxLength(100)
+                .IsRequired();
+
             entity.Property(e => e.Username)
                 .HasMaxLength(100)
                 .IsUnicode(false);
