@@ -24,9 +24,11 @@ function OnConnected() {
 
 // Received Notifications methods
 connection.on("ReceivedNotification", function (message) {
-    alert("You receive a generic message: " + message)
+    //alert("You receive a generic message: " + message);
+    DisplayGeneralNotification(message, "General Message");
 });
 
 connection.on("ReceivedPersonalNotification", function (message, username) {
-    alert("Someone send you a message: " + message);
+    //alert("Someone send you a message: " + message);
+    DisplayPersonalNotification(message, "Hey " + username);
 });
